@@ -11,5 +11,17 @@
          </run>
       </application>
    </extension>
+   <extension
+         id="OpensixenInstaller"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="org.opensixen.p2.installer.application"
+            name="Opensixen Installer">
+         <property
+               name="appName"
+               value="Opensixen Installer">
+         </property>
+      </product>
+   </extension>
 
 </plugin>
