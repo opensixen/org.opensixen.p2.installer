@@ -5,6 +5,8 @@ Bundle-SymbolicName: org.opensixen.p2.installer; singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.opensixen.p2.installer.Activator
 Require-Bundle: org.eclipse.ui,
+ org.eclipse.swt,
+ org.eclipse.core.net,
  org.eclipse.core.runtime,
  org.opensixen.p2.common;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
