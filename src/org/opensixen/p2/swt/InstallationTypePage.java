@@ -35,9 +35,9 @@ public class InstallationTypePage extends WizardPage implements SelectionListene
 	 * @param pageName
 	 */
 	protected InstallationTypePage(InstallerWizard wizard) {
-		super("Tipo de instalacion");
+		super(Messages.INSTALL_TYPE);
 		this.wizard = wizard;
-		setDescription("Seleccione que tipo de instalacion quiere realizar");
+		setDescription(Messages.INSTALL_TYPE_DESCRIPTION);
 	}
 
 	/* (non-Javadoc)
@@ -51,7 +51,7 @@ public class InstallationTypePage extends WizardPage implements SelectionListene
 		container.setLayout(layout);
 		
 		optionLite = new Button(container, SWT.CHECK);
-		optionLite.setText("Version Lite");
+		optionLite.setText(Messages.LITE_VERSION);
 		optionLite.addSelectionListener(this);
 		
 		
@@ -71,12 +71,12 @@ public class InstallationTypePage extends WizardPage implements SelectionListene
 		liteGroup.pack();
 		
 		optionStd = new Button(container, SWT.CHECK);
-		optionStd.setText("Version Estantard");
+		optionStd.setText(Messages.STD_VERSION);
 		optionStd.addSelectionListener(this);
 		
 		Group stdGroup = new Group(container, SWT.NONE);
 		stdGroup.setLayout(new GridLayout(2, true));
-		stdGroup.setText("Opensixen");
+		stdGroup.setText(Messages.OPENSIXEN);
 		stdGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		
 		
@@ -116,7 +116,7 @@ public class InstallationTypePage extends WizardPage implements SelectionListene
 			liteBtn.setSelection(true);
 			liteBtn.setEnabled(true);
 			
-			log.trace("Selected Opensixen Lite");
+			log.trace(Messages.LITE_SELECTED);
 			
 		}
 		else  {
@@ -131,7 +131,7 @@ public class InstallationTypePage extends WizardPage implements SelectionListene
 			liteBtn.setSelection(false);
 			liteBtn.setEnabled(false);
 			
-			log.trace("Selected Opensixen Standard");
+			log.trace(Messages.STD_SELECTED);
 		}
 		
 	}

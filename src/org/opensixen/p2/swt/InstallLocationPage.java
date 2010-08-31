@@ -38,9 +38,9 @@ public class InstallLocationPage extends WizardPage implements ChangeListener,
 	private Button bServer;
 
 	public InstallLocationPage(InstallerWizard wizard) {
-		super("Ubicacion de la instalacion");
+		super(Messages.INSTALL_LOCATION);
 		this.wizard = wizard;
-		setDescription("Indique donde quiere instalar los componentes seleccionados");
+		setDescription(Messages.INSTALL_LOCATION_DESCRIPTION);
 	}
 
 	/*
@@ -57,7 +57,7 @@ public class InstallLocationPage extends WizardPage implements ChangeListener,
 		container.setLayout(layout);
 
 		Label l = new Label(container, SWT.NONE);
-		l.setText("Ruta del cliente");
+		l.setText(Messages.CLIENT_PATH);
 		Composite c = new Composite(container, SWT.NONE);
 		c.setLayout(new GridLayout(2, false));
 		c.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
@@ -66,11 +66,11 @@ public class InstallLocationPage extends WizardPage implements ChangeListener,
 				.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
 		fClientPath.addModifyListener(this);
 		bClient = new Button(c, SWT.PUSH);
-		bClient.setText("Buscar");
+		bClient.setText(Messages.SEARCH);
 		bClient.addSelectionListener(this);
 
 		l = new Label(container, SWT.NONE);
-		l.setText("Ruta del servidor");
+		l.setText(Messages.SERVER_PATH);
 		c = new Composite(container, SWT.NONE);
 		c.setLayout(new GridLayout(2, false));
 		c.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
@@ -79,7 +79,7 @@ public class InstallLocationPage extends WizardPage implements ChangeListener,
 				.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
 		fServerPath.addModifyListener(this);
 		bServer = new Button(c, SWT.PUSH);
-		bServer.setText("Buscar");
+		bServer.setText(Messages.SEARCH);
 		bServer.addSelectionListener(this);		
 		
 		update();
@@ -196,7 +196,7 @@ public class InstallLocationPage extends WizardPage implements ChangeListener,
 	public void widgetSelected(SelectionEvent e) {
 		if (e.getSource().equals(bClient)) {
 			DirectoryDialog dd = new DirectoryDialog(getShell(), SWT.OPEN);
-			dd.setText("Open");
+			dd.setText(Messages.OPEN);
 
 			String dir = dd.open();
 			if (dir != null) {
@@ -207,7 +207,7 @@ public class InstallLocationPage extends WizardPage implements ChangeListener,
 
 		else if (e.getSource().equals(bServer)) {
 			DirectoryDialog dd = new DirectoryDialog(getShell(), SWT.OPEN);
-			dd.setText("Open");
+			dd.setText(Messages.OPEN);
 
 			String dir = dd.open();
 			if (dir != null) {

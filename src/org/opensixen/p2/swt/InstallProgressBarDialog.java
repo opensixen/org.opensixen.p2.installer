@@ -29,8 +29,8 @@ public class InstallProgressBarDialog extends RunableProgressBarDialog {
 	@Override
 	public void create() {
 		super.create();
-		setTitle("Instalando Opensixen");
-		setMessage("Se esta instalando Opensixen, por favor espere.", IMessageProvider.INFORMATION);
+		setTitle(Messages.INSTALLING_OPENSIXEN);
+		setMessage(Messages.INSTALLING_OPENSIXEN_WAIT, IMessageProvider.INFORMATION);
 	}
 
 	/* (non-Javadoc)

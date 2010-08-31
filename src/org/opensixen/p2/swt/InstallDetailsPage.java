@@ -32,8 +32,8 @@ public class InstallDetailsPage extends WizardPage implements ChangeListener, Se
 	private InstallProgressBarDialog worker;
 
 	public InstallDetailsPage(InstallerWizard wizard)	{
-		super("Confirmar instalacion.");
-		setDescription("Confirme que los datos introducidos son correctos y pulse en finalizar.");
+		super(Messages.INSTALL_CONFIRM);
+		setDescription(Messages.INSTALL_CONFIRM_DESCRIPTION);
 		this.wizard = wizard;
 	}
 
@@ -55,18 +55,18 @@ public class InstallDetailsPage extends WizardPage implements ChangeListener, Se
 		container.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 						
 			Label l = new Label(container, SWT.BOLD);
-			l.setText("Tipo de instalacion: ");
+			l.setText(Messages.INSTALL_TYPE);
 			installType = new Label(container, SWT.NONE);
 			installType.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
 		
 			l = new Label(container, SWT.BOLD);
-			l.setText("Directorio instalacion cliente: ");
+			l.setText(Messages.CLIENT_PATH);
 			clientPath = new Label(container, SWT.NONE);
 			clientPath.setEnabled(false);
 			clientPath.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
 			
 			l = new Label(container, SWT.BOLD);
-			l.setText("Directorio instalacion servidor: ");
+			l.setText(Messages.SERVER_PATH);
 			serverPath = new Label(container, SWT.READ_ONLY);
 			serverPath.setEnabled(false);
 			serverPath.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
@@ -78,10 +78,10 @@ public class InstallDetailsPage extends WizardPage implements ChangeListener, Se
 			btnComposite.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, true));
 			
 			l = new Label(btnComposite, SWT.NONE);
-			l.setText("Pulse el boton para instalar");
+			l.setText(Messages.PRESS_BUTTON_TO_INSTALL);
 			
 			installBtn = new Button(btnComposite, SWT.PUSH);
-			installBtn.setText("Instalar");
+			installBtn.setText(Messages.INSTALL);
 			installBtn.addSelectionListener(this);
 			
 			
@@ -101,7 +101,7 @@ public class InstallDetailsPage extends WizardPage implements ChangeListener, Se
 			serverPath.setText(wizard.getInstallLocationPage().getServerInstallPath());
 		}
 		else {
-			serverPath.setText("No se instalara " + ProductDescription.LABEL_SERVER);
+			serverPath.setText(Messages.NOT_INSTALLED + ProductDescription.LABEL_SERVER);
 		}
 	}
 

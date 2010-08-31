@@ -55,94 +55,94 @@ public class InstallWorker implements ProgressBarRunnable{
 	private  boolean install()	{				
 		boolean ret = false;
 		if (installType.equals(ProductDescription.TYPE_LITE))	{
-			messages.setText("Instalando Opensixen Lite");
+			messages.setText(Messages.INSTALLING_OPENSIXEN_LITE);
 			bar.setSelection(25);
 			ret = installLite();
 			bar.setSelection(100);
 			if (ret)	{
-				messages.setText("Instalacion completada con exito.");
+				messages.setText(Messages.INSTALL_EXIT_OK);
 			}
 			else {
-				messages.setText("Fallo al instalar Opensixen Lite.");
+				messages.setText(Messages.INSTALL_LITE_EXIT_FAIL);
 			}
 			return ret;
 		}
 		else if (installType.equals(ProductDescription.TYPE_CLIENT))	{
-			messages.setText("Instalando cliente Opensixen");
+			messages.setText(Messages.INSTALLING_OPENSIXEN_CLIENT);
 			bar.setSelection(25);
 			ret = installLite();
 			bar.setSelection(100);
 			if (ret)	{
-				messages.setText("Instalacion completada con exito.");
+				messages.setText(Messages.INSTALL_EXIT_OK);
 			}
 			else {
-				messages.setText("Fallo al instalar el cliente.");
+				messages.setText(Messages.INSTALL_CLIENT_EXIT_FAIL);
 			}
 			return ret;
 		}
 		else if (installType.equals(ProductDescription.TYPE_SERVER))	{
-			messages.setText("Instalando servidor Opensixen");
+			messages.setText(Messages.INSTALLING_OPENSIXEN_SERVER);
 			bar.setSelection(25);
 			if (installServer())	{
 				bar.setSelection(50);
-				messages.setText("Configurando el servidor Opensixen");
+				messages.setText(Messages.CONFIGURING_OPENSIXEN_SERVER);
 				if (configureServer())	{
 					bar.setSelection(75);
-					messages.setText("Instalando Server Manager");
+					messages.setText(Messages.INSTALLING_OPENSIXEN_MANAGER);
 					if (installServerManager())	{
 						ret = true;
 					}
 					else {
-						messages.setText("Fallo al instalar el Server Manager.");
+						messages.setText(Messages.INSTALL_MANAGER_EXIT_FAIL);
 					}
 				}
 				else {
-					messages.setText("Fallo al configurar el servidor.");
+					messages.setText(Messages.CONFIG_SERVER_EXIT_FAIL);
 				}
 			}
 			else {
-				messages.setText("Fallo al instalar el servidor.");
+				messages.setText(Messages.INSTALL_SERVER_EXIT_FAIL);
 			}
 			bar.setSelection(100);
 			if (ret)	{
-				messages.setText("Instalacion completada con exito.");
+				messages.setText(Messages.INSTALL_SERVER_EXIT_OK);
 			}
 			return ret;
 		}
 		else if (installType.equals(ProductDescription.TYPE_FULL))	{
 			
-			messages.setText("Instalando servidor Opensixen");
+			messages.setText(Messages.INSTALLING_OPENSIXEN_SERVER);
 			bar.setSelection(20);
 			if (installServer())	{
 				bar.setSelection(40);
-				messages.setText("Configurando el servidor Opensixen");
+				messages.setText(Messages.CONFIGURING_OPENSIXEN_SERVER);
 				if (configureServer())	{
 					bar.setSelection(60);
-					messages.setText("Instalando Server Manager");
+					messages.setText(Messages.INSTALLING_OPENSIXEN_MANAGER);
 					if (installServerManager())	{
 						bar.setSelection(80);
-						messages.setText("Instalando cliente Opensixen");
+						messages.setText(Messages.INSTALLING_OPENSIXEN_CLIENT);
 						if (installClient())	{
 							ret = true;							
 						}
 						else {
-							messages.setText("Fallo al instalar el cliente Opensixen.");
+							messages.setText(Messages.INSTALL_CLIENT_EXIT_FAIL);
 						}
 					}
 					else {
-						messages.setText("Fallo al instalar el Server Manager.");
+						messages.setText(Messages.INSTALL_MANAGER_EXIT_FAIL);
 					}
 				}
 				else {
-					messages.setText("Fallo al configurar el servidor.");
+					messages.setText(Messages.CONFIGURING_SERVER_EXIT_FAIL);
 				}
 			}
 			else {
-				messages.setText("Fallo al instalar el servidor.");
+				messages.setText(Messages.INSTALL_SERVER_EXIT_FAIL);
 			}
 			bar.setSelection(100);
 			if (ret)	{
-				messages.setText("Instalacion completada con exito.");
+				messages.setText(Messages.INSTALL_FULL_EXIT_OK);
 			}
 			return ret;
 

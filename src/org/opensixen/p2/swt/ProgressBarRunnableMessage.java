@@ -19,7 +19,7 @@ class ProgressBarRunnableMessage	{
 	public String getText() {
 		if (text != null)
 			return text;
-		return "";
+		return ""; //$NON-NLS-1$
 	
 		
 	}

@@ -67,10 +67,10 @@ public abstract class RunableProgressBarDialog extends TitleAreaDialog {
 	
 	public void run()	{
 		if (!workEnd)	{
-			log.error("Trabajo corriendo actualmente. no se puede iniciar otra instancia.");
+			log.error(Messages.JOB_RUNNING_CANT_INITIATE);
 			return;
 		}
-		log.info("Starting installer thread.");
+		log.info("Starting installer thread."); //$NON-NLS-1$
 		
 		worker = getRunnable();
 		
@@ -100,7 +100,7 @@ public abstract class RunableProgressBarDialog extends TitleAreaDialog {
 	 * Called from the thread InstallWorker
 	 */
 	public synchronized void finishWork()	{
-		log.info("Install thread end.");
+		log.info("Install thread end."); //$NON-NLS-1$
 		workEnd = true;
 		getButton(OK).setEnabled(true);
 	}

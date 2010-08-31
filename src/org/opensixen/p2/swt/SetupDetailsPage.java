@@ -34,8 +34,8 @@ public class SetupDetailsPage extends WizardPage implements ChangeListener, Sele
 	private Label installType;
 
 	public SetupDetailsPage(InstallerWizard wizard)	{
-		super("Confirmar configuracion.");
-		setDescription("Confirme que los datos introducidos son correctos y pulse en finalizar.");
+		super(Messages.CONFIRM_SETUP);
+		setDescription(Messages.CONFIRM_SETUP_DESCRIPTION);
 		this.wizard = wizard;
 	}
 
@@ -53,7 +53,7 @@ public class SetupDetailsPage extends WizardPage implements ChangeListener, Sele
 		container.setLayout(layout);
 		container.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 			Label l = new Label(container, SWT.BOLD);
-			l.setText("Tipo de instalacion: ");
+			l.setText(Messages.INSTALL_TYPE);
 			l.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
 			installType = new Label(container, SWT.NONE);
 			installType.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
@@ -64,10 +64,10 @@ public class SetupDetailsPage extends WizardPage implements ChangeListener, Sele
 			btnComposite.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, true));
 			
 			l = new Label(btnComposite, SWT.NONE);
-			l.setText("Pulse el boton para instalar y configurar la base de datos.");
+			l.setText(Messages.PRESS_BUTTON_TO_CONFIGURE);
 			
 			configBtn = new Button(btnComposite, SWT.PUSH);
-			configBtn.setText("Configurar");
+			configBtn.setText(Messages.CONFIG);
 			configBtn.addSelectionListener(this);
 						
 			// Required to avoid an error in the system

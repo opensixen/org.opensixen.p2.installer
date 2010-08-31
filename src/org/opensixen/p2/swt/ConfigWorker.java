@@ -54,7 +54,7 @@ public class ConfigWorker implements ProgressBarRunnable {
 	@Override
 	public void run() {
 		// Create Properties
-		messages.setText("Creando fichero properties");
+		messages.setText(Messages.ConfigWorker_CREATING_PROPERTIES);
 		bar.setSelection(20);
 		createProperties();
 		bar.setSelection(100);

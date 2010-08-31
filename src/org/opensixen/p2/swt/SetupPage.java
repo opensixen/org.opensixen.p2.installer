@@ -43,10 +43,10 @@ public class SetupPage extends WizardPage implements ChangeListener, SelectionLi
 	private Button dbImportData;
 	private Button dbNothing;
 	
-	public final String TYPE_INSTALL = "install";
-	public final String TYPE_USER = "user";
-	public final String TYPE_DATA = "data";
-	public final String TYPE_NOTHING = "nothing";
+	public final String TYPE_INSTALL = "install"; //$NON-NLS-1$
+	public final String TYPE_USER = "user"; //$NON-NLS-1$
+	public final String TYPE_DATA = "data"; //$NON-NLS-1$
+	public final String TYPE_NOTHING = "nothing"; //$NON-NLS-1$
 	
 	private Text[] systemFields;
 	private Text[] userFields;
@@ -64,7 +64,7 @@ public class SetupPage extends WizardPage implements ChangeListener, SelectionLi
 	private boolean init = false;
 	
 	// Hardcode. From Database.DB_NAMES
-	private String[] dbNames = {"PostgreSQL", "Oracle"};
+	private String[] dbNames = {"PostgreSQL", "Oracle"}; //$NON-NLS-1$ //$NON-NLS-2$
 	private String homePath;
 	private Text fASHost;
 	private Text fASPort;
@@ -79,8 +79,8 @@ public class SetupPage extends WizardPage implements ChangeListener, SelectionLi
 	 * @param pageName
 	 */
 	protected SetupPage(InstallerWizard wizard) {
-		super("Configuracion de base de datos.");
-		setDescription("Introduzca los datos de su instalacion.");
+		super(Messages.DATABASE_SETUP);
+		setDescription(Messages.DATABASE_SETUP_DESCRIPTION);
 		this.wizard = wizard;
 	}
 
@@ -95,33 +95,33 @@ public class SetupPage extends WizardPage implements ChangeListener, SelectionLi
 
 		Group operation = new Group(container, SWT.NONE);
 		operation.setLayout(new GridLayout());
-		operation.setText("Opciones de base de datos");
+		operation.setText(Messages.DATABASE_OPTIONS);
 		operation.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		
 		dbInstall = new Button(operation, SWT.RADIO);
-		dbInstall.setText("No dispongo de base de datos.");
+		dbInstall.setText(Messages.NO_DATABASE);
 		dbInstall.addSelectionListener(this);
 		
 		dbCreateUser = new Button(operation, SWT.RADIO);
-		dbCreateUser.setText("Dispongo de base de datos sin configurar");
+		dbCreateUser.setText(Messages.DATABASE_WITHOUT_SETUP);
 		dbCreateUser.addSelectionListener(this);
 		
 		dbImportData = new Button(operation, SWT.RADIO);
-		dbImportData.setText("Dispongo de base de datos configurada sin datos.");
+		dbImportData.setText(Messages.DATABASE_WITHOUT_DATA);
 		dbImportData.addSelectionListener(this);
 		dbCreateUser.setSelection(true); // Default option
 		
 		dbNothing = new Button(operation, SWT.RADIO);
-		dbNothing.setText("Dispongo de base de datos configurada con datos.");		
+		dbNothing.setText(Messages.DATABASE_WITH_DATA);		
 		dbNothing.addSelectionListener(this);
 
 		Group saSetup = new Group(container, SWT.NONE);
 		saSetup.setLayout(new GridLayout(2, false));
 		saSetup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		saSetup.setText("Configuracion Servidor de Aplicaciones");		
+		saSetup.setText(Messages.AS_CONFIG);		
 		
 		Label l = new Label(saSetup, SWT.NONE);
-		l.setText("Host servidor de aplicaciones");
+		l.setText(Messages.AS_HOST);
 		fASHost = new Text(saSetup, SWT.BORDER);
 		fASHost.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
 		fASHost.addModifyListener(this);
@@ -130,35 +130,35 @@ public class SetupPage extends WizardPage implements ChangeListener, SelectionLi
 		fASHost.setText(PlatformDetails.getHostname());
 		
 		l = new Label(saSetup, SWT.NONE);
-		l.setText("Puerto servidor de aplicaciones");
+		l.setText(Messages.AS_PORT);
 		fASPort = new Text(saSetup, SWT.BORDER);
 		fASPort.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
 		fASPort.addModifyListener(this);
 		
 		// Not configurable
-		fASPort.setText("8080");
+		fASPort.setText("8080"); //$NON-NLS-1$
 		fASPort.setEnabled(false);
 		
 		Group setup = new Group(container, SWT.NONE);
 		setup.setLayout(new GridLayout(2, false));
 		setup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		setup.setText("Configuracion");
+		setup.setText(Messages.CONFIG);
 
 		l = new Label(setup, SWT.NONE);
-		l.setText("Tipo de base de datos.");
+		l.setText(Messages.DATABASE_TYPE);
 		fDbType = new Combo(setup, SWT.DROP_DOWN);
 		fDbType.setItems(dbNames);
 		fDbType.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
 		fDbType.addSelectionListener(this);
 		
 		l = new Label(setup, SWT.NONE);
-		l.setText("Puerto base de datos");
+		l.setText(Messages.DB_PORT);
 		fDbPort = new Text(setup, SWT.BORDER);
 		fDbPort.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
 		fDbPort.addModifyListener(this);
 		
 		l = new Label(setup, SWT.NONE);
-		l.setText("Host base de datos");
+		l.setText(Messages.DB_HOST);
 		fDbHost = new Text(setup, SWT.BORDER);
 		fDbHost.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
 		fDbHost.addModifyListener(this);
@@ -167,37 +167,37 @@ public class SetupPage extends WizardPage implements ChangeListener, SelectionLi
 		fDbHost.setText(PlatformDetails.getHostname());
 		
 		l = new Label(setup, SWT.NONE);
-		l.setText("Usuario base de datos");
+		l.setText(Messages.DB_USER_SYSTEM);
 		
 		fDBSystemuser = new Text(setup, SWT.BORDER);
 		fDBSystemuser.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
 		fDBSystemuser.addModifyListener(this);
 		
 		l = new Label(setup, SWT.NONE);
-		l.setText("Password base de datos");
+		l.setText(Messages.DB_PWD_SYSTEM);
 		
 		fDBSystemPasswd = new Text(setup, SWT.PASSWORD | SWT.BORDER);
 		fDBSystemPasswd.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));	
 		fDBSystemPasswd.addModifyListener(this);
 		l = new Label(setup, SWT.NONE);
-		l.setText("Nombre base de datos");
+		l.setText(Messages.DB_NAME);
 		fDbName = new Text(setup, SWT.BORDER);
 		fDbName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
 		fDbName.addModifyListener(this);
 		
 		l = new Label(setup, SWT.NONE);
-		l.setText("Usuario base de datos");
+		l.setText(Messages.DB_USER);
 		
 		fDBuser = new Text(setup, SWT.BORDER);
 		fDBuser.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
 		fDBuser.addModifyListener(this);
 		
 		// Not configurable
-		fDBuser.setText("adempiere");
+		fDBuser.setText("adempiere"); //$NON-NLS-1$
 		fDBuser.setEnabled(false);
 		
 		l = new Label(setup, SWT.NONE);
-		l.setText("Password base de datos");
+		l.setText(Messages.DB_PASSWORD);
 		
 		fDBPasswd = new Text(setup, SWT.PASSWORD | SWT.BORDER);
 		fDBPasswd.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
@@ -283,11 +283,11 @@ public class SetupPage extends WizardPage implements ChangeListener, SelectionLi
 		// If change combo, change default port
 		else if (e.getSource().equals(fDbType))		{
 			
-			if (fDbType.getText().equals("PostgreSQL"))	{
-				fDbPort.setText("5432");
+			if (fDbType.getText().equals("PostgreSQL"))	{ //$NON-NLS-1$
+				fDbPort.setText("5432"); //$NON-NLS-1$
 			}
 			else {
-				fDbPort.setText("1521");
+				fDbPort.setText("1521"); //$NON-NLS-1$
 			}
 		}				
 		
@@ -380,23 +380,23 @@ public class SetupPage extends WizardPage implements ChangeListener, SelectionLi
 	public void bind()	{
 	// Load current configuration
 	Properties conf = new Properties();
-	conf.put("name", fASHost.getText());
-	conf.put("AppsHost", fASHost.getText());
-	conf.put("AppsPort", fASPort.getText());
-	conf.put("type", fDbType.getText());
-	conf.put("DBhost",fDbHost.getText());
-	conf.put("DBport", fDbPort.getText());
-	conf.put("DBname", fDbName.getText());
+	conf.put("name", fASHost.getText()); //$NON-NLS-1$
+	conf.put("AppsHost", fASHost.getText()); //$NON-NLS-1$
+	conf.put("AppsPort", fASPort.getText()); //$NON-NLS-1$
+	conf.put("type", fDbType.getText()); //$NON-NLS-1$
+	conf.put("DBhost",fDbHost.getText()); //$NON-NLS-1$
+	conf.put("DBport", fDbPort.getText()); //$NON-NLS-1$
+	conf.put("DBname", fDbName.getText()); //$NON-NLS-1$
 	
-	conf.put("BQ", false);
-	conf.put("FW", false);
-	conf.put("FWhost", "");
-	conf.put("FWport", "");	
+	conf.put("BQ", false); //$NON-NLS-1$
+	conf.put("FW", false); //$NON-NLS-1$
+	conf.put("FWhost", ""); //$NON-NLS-1$ //$NON-NLS-2$
+	conf.put("FWport", "");	 //$NON-NLS-1$ //$NON-NLS-2$
 	
-	conf.put("UID", fDBuser.getText());
-	conf.put("PWD", fDBPasswd.getText());
-	conf.put("SystemUID", fDBSystemuser.getText());
-	conf.put("SystemPWD", fDBSystemPasswd.getText());
+	conf.put("UID", fDBuser.getText()); //$NON-NLS-1$
+	conf.put("PWD", fDBPasswd.getText()); //$NON-NLS-1$
+	conf.put("SystemUID", fDBSystemuser.getText()); //$NON-NLS-1$
+	conf.put("SystemPWD", fDBSystemPasswd.getText()); //$NON-NLS-1$
 	
 	this.config = conf;
 		
@@ -423,22 +423,22 @@ public class SetupPage extends WizardPage implements ChangeListener, SelectionLi
 	{
 		Properties prop = getConfiguration();
 		
-		StringBuffer sb = new StringBuffer ("CConnection[");
-		sb.append ("name=").append (prop.getProperty("name"))
-		  .append (",AppsHost=").append (prop.getProperty("AppsHost"))
-		  .append (",AppsPort=").append (prop.getProperty("AppsPort"))
-		  .append (",type=").append (prop.getProperty("type"))
-		  .append (",DBhost=").append (prop.getProperty("DBhost"))
-		  .append (",DBport=").append (prop.getProperty("DBport"))
-		  .append (",DBname=").append (prop.getProperty("DBname"))
-		  .append (",BQ=").append (prop.getProperty("BQ"))
-		  .append (",FW=").append (prop.getProperty("FW"))
-		  .append (",FWhost=").append (prop.getProperty("FWhost"))
-		  .append (",FWport=").append (prop.getProperty("FWport"))
-		  .append (",UID=").append (prop.getProperty("UID"))
-		  .append (",PWD=").append (prop.getProperty("PWD"))
+		StringBuffer sb = new StringBuffer ("CConnection["); //$NON-NLS-1$
+		sb.append ("name=").append (prop.getProperty("name")) //$NON-NLS-1$ //$NON-NLS-2$
+		  .append (",AppsHost=").append (prop.getProperty("AppsHost")) //$NON-NLS-1$ //$NON-NLS-2$
+		  .append (",AppsPort=").append (prop.getProperty("AppsPort")) //$NON-NLS-1$ //$NON-NLS-2$
+		  .append (",type=").append (prop.getProperty("type")) //$NON-NLS-1$ //$NON-NLS-2$
+		  .append (",DBhost=").append (prop.getProperty("DBhost")) //$NON-NLS-1$ //$NON-NLS-2$
+		  .append (",DBport=").append (prop.getProperty("DBport")) //$NON-NLS-1$ //$NON-NLS-2$
+		  .append (",DBname=").append (prop.getProperty("DBname")) //$NON-NLS-1$ //$NON-NLS-2$
+		  .append (",BQ=").append (prop.getProperty("BQ")) //$NON-NLS-1$ //$NON-NLS-2$
+		  .append (",FW=").append (prop.getProperty("FW")) //$NON-NLS-1$ //$NON-NLS-2$
+		  .append (",FWhost=").append (prop.getProperty("FWhost")) //$NON-NLS-1$ //$NON-NLS-2$
+		  .append (",FWport=").append (prop.getProperty("FWport")) //$NON-NLS-1$ //$NON-NLS-2$
+		  .append (",UID=").append (prop.getProperty("UID")) //$NON-NLS-1$ //$NON-NLS-2$
+		  .append (",PWD=").append (prop.getProperty("PWD")) //$NON-NLS-1$ //$NON-NLS-2$
 		  ;		//	the format is read by setAttributes
-		sb.append ("]");
+		sb.append ("]"); //$NON-NLS-1$
 		return sb.toString ();
 	}	//  toStringLong
 

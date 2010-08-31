@@ -11,6 +11,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.opensixen.p2.swt.InstallerWizard;
+import org.opensixen.p2.swt.Messages;
 
 /**
  * This class controls all aspects of the application's execution
@@ -37,13 +38,13 @@ public class Application implements IApplication {
 		//installer.install("/tmp/osx");
 			
 		// Activamos Log4j
-		URL log4j = getClass().getClassLoader().getResource("log4j.properties");
+		URL log4j = getClass().getClassLoader().getResource("log4j.properties"); //$NON-NLS-1$
 		
 		if (log4j != null)	{
 			PropertyConfigurator.configure( log4j );
 		}
 		
-		log.info("Starting Opensixen Installer.");
+		log.info(Messages.STARTING_OPENSIXEN_INSTALLER);
 
 		
 		InstallerWizard wizard = new InstallerWizard(shell);

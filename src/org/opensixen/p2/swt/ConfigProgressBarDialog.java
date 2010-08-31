@@ -31,8 +31,8 @@ public class ConfigProgressBarDialog extends RunableProgressBarDialog {
 	@Override
 	public void create() {
 		super.create();
-		setTitle("Configurando Opensixen");
-		setMessage("Se esta configurando Opensixen, por favor espere.", IMessageProvider.INFORMATION);
+		setTitle(Messages.CONFIGURING_OPENSIEN);
+		setMessage(Messages.CONFIGURING_OPENSIXEN_DESCRIPTION, IMessageProvider.INFORMATION);
 	}
 	
 	/* (non-Javadoc)
@@ -45,10 +45,10 @@ public class ConfigProgressBarDialog extends RunableProgressBarDialog {
 		InstallLocationPage location = wizard.getInstallLocationPage();
 
 		// Add some configuration
-		prop.put("SetupType", setupPage.getConfigType());
-		prop.put("ClientPath", location.getClientInstallPath());
-		prop.put("ServerPath", location.getServerInstallPath());
-		prop.put("InstallType", wizard.getInstallationTypePage().getInstallType());
+		prop.put("SetupType", setupPage.getConfigType()); //$NON-NLS-1$
+		prop.put("ClientPath", location.getClientInstallPath()); //$NON-NLS-1$
+		prop.put("ServerPath", location.getServerInstallPath()); //$NON-NLS-1$
+		prop.put("InstallType", wizard.getInstallationTypePage().getInstallType()); //$NON-NLS-1$
 		prop.put(Ini.P_CONNECTION, setupPage.toStringLong ());
 		
 		ConfigWorker worker = new ConfigWorker(prop, this);
