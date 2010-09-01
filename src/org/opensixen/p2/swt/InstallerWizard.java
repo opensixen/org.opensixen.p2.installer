@@ -77,6 +77,8 @@ public class InstallerWizard extends Wizard {
 			
 		for (ChangeListener listener:listeners)	{
 			listener.changePerformed();
+
+			// If some listener cat't flit to next page, we can't finish
 			if (!listener.canFlipToNextPage())	{
 				ok = false;
 			}
@@ -113,6 +115,11 @@ public class InstallerWizard extends Wizard {
 	}
 	
 
+	public void fireErrorExit()	{		
+		canFinish = true;
+		dialog.updateButtons();		
+	}
+	
 
 	/**
 	 * @return the installationTypePage

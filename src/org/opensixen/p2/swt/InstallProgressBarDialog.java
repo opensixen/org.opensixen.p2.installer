@@ -22,7 +22,7 @@ public class InstallProgressBarDialog extends RunableProgressBarDialog {
 	 * @param wizard
 	 */
 	public InstallProgressBarDialog(Shell parent, InstallerWizard wizard) {
-		super(parent);
+		super(parent, wizard);
 		this.wizard = wizard;
 	}
 	
@@ -32,17 +32,6 @@ public class InstallProgressBarDialog extends RunableProgressBarDialog {
 		setTitle(Messages.INSTALLING_OPENSIXEN);
 		setMessage(Messages.INSTALLING_OPENSIXEN_WAIT, IMessageProvider.INFORMATION);
 	}
-
-	/* (non-Javadoc)
-	 * @see org.opensixen.p2.swt.RunableProgressBarDialog#finishWork()
-	 */
-	@Override
-	public synchronized void finishWork() {
-		// TODO Auto-generated method stub
-		super.finishWork();
-		wizard.fireChange(this);
-	}
-	
 	
 	/* (non-Javadoc)
 	 * @see org.opensixen.p2.swt.RunableProgressBarDialog#getRunnable()

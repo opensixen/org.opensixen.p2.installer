@@ -62,13 +62,11 @@ public class InstallDetailsPage extends WizardPage implements ChangeListener, Se
 			l = new Label(container, SWT.BOLD);
 			l.setText(Messages.CLIENT_PATH);
 			clientPath = new Label(container, SWT.NONE);
-			clientPath.setEnabled(false);
 			clientPath.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
 			
 			l = new Label(container, SWT.BOLD);
 			l.setText(Messages.SERVER_PATH);
 			serverPath = new Label(container, SWT.READ_ONLY);
-			serverPath.setEnabled(false);
 			serverPath.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
 			
 			
@@ -122,7 +120,10 @@ public class InstallDetailsPage extends WizardPage implements ChangeListener, Se
 			return false;
 		}
 		
-		return worker.finished();
+		if (worker.finished())	{
+			return worker.workOk();
+		}
+		return false;
 	}
 
 	/* (non-Javadoc)

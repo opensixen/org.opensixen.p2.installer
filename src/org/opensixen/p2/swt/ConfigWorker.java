@@ -59,7 +59,7 @@ public class ConfigWorker implements ProgressBarRunnable {
 		createProperties();
 		bar.setSelection(100);
 		
-		dialog.finishWork();
+		dialog.finishWork(true);
 	}
 	
 	private boolean createProperties()	{

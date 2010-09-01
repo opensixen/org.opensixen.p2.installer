@@ -3,6 +3,9 @@
  */
 package org.opensixen.p2.swt;
 
+import org.apache.log4j.Logger;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
@@ -12,7 +15,9 @@ import org.opensixen.p2.common.Installer;
 import org.opensixen.p2.common.ProductDescription;
 
 /**
+ * Very Ugly class..
  * 
+ * Must be rewrited.
  * 
  * @author Eloy Gomez
  * Indeos Consultoria http://www.indeos.es
@@ -20,6 +25,8 @@ import org.opensixen.p2.common.ProductDescription;
  */
 public class InstallWorker implements ProgressBarRunnable{
 
+	private Logger log = Logger.getLogger(getClass());
+	
 	public ProgressBarRunnableMessage messages;
 	public ProgressBarRunnableBarStatus bar;
 	
@@ -44,15 +51,25 @@ public class InstallWorker implements ProgressBarRunnable{
 	 */
 	@Override
 	public void run() {
-		install();
-		dialog.finishWork();
+		
+		boolean ok = true;
+		try {
+			install();
+		}
+		catch (WorkerException e)	{
+			log.error(e.getMessage(), e);
+			bar.setSelection(100);
+			messages.setText(e.getMessage());
+			ok = false;
+		}
+		dialog.finishWork(ok);
 	}
 	
 	/**
 	 * Ejecuta la instalacion
 	 * @return
 	 */
-	private  boolean install()	{				
+	private  boolean install() throws WorkerException	{				
 		boolean ret = false;
 		if (installType.equals(ProductDescription.TYPE_LITE))	{
 			messages.setText(Messages.INSTALLING_OPENSIXEN_LITE);
@@ -63,20 +80,20 @@ public class InstallWorker implements ProgressBarRunnable{
 				messages.setText(Messages.INSTALL_EXIT_OK);
 			}
 			else {
-				messages.setText(Messages.INSTALL_LITE_EXIT_FAIL);
+				throw new WorkerException(Messages.INSTALL_LITE_EXIT_FAIL);
 			}
 			return ret;
 		}
 		else if (installType.equals(ProductDescription.TYPE_CLIENT))	{
 			messages.setText(Messages.INSTALLING_OPENSIXEN_CLIENT);
 			bar.setSelection(25);
-			ret = installLite();
+			ret = installClient();
 			bar.setSelection(100);
 			if (ret)	{
 				messages.setText(Messages.INSTALL_EXIT_OK);
 			}
 			else {
-				messages.setText(Messages.INSTALL_CLIENT_EXIT_FAIL);
+				throw new WorkerException(Messages.INSTALL_CLIENT_EXIT_FAIL);
 			}
 			return ret;
 		}
@@ -93,15 +110,15 @@ public class InstallWorker implements ProgressBarRunnable{
 						ret = true;
 					}
 					else {
-						messages.setText(Messages.INSTALL_MANAGER_EXIT_FAIL);
+						throw new WorkerException(Messages.INSTALL_MANAGER_EXIT_FAIL);
 					}
 				}
 				else {
-					messages.setText(Messages.CONFIG_SERVER_EXIT_FAIL);
+					throw new WorkerException(Messages.CONFIG_SERVER_EXIT_FAIL);
 				}
 			}
 			else {
-				messages.setText(Messages.INSTALL_SERVER_EXIT_FAIL);
+				throw new WorkerException(Messages.INSTALL_SERVER_EXIT_FAIL);
 			}
 			bar.setSelection(100);
 			if (ret)	{
@@ -126,19 +143,19 @@ public class InstallWorker implements ProgressBarRunnable{
 							ret = true;							
 						}
 						else {
-							messages.setText(Messages.INSTALL_CLIENT_EXIT_FAIL);
+							throw new WorkerException(Messages.INSTALL_CLIENT_EXIT_FAIL);
 						}
 					}
 					else {
-						messages.setText(Messages.INSTALL_MANAGER_EXIT_FAIL);
+						throw new WorkerException(Messages.INSTALL_MANAGER_EXIT_FAIL);
 					}
 				}
 				else {
-					messages.setText(Messages.CONFIGURING_SERVER_EXIT_FAIL);
+					throw new WorkerException(Messages.CONFIGURING_SERVER_EXIT_FAIL);
 				}
 			}
 			else {
-				messages.setText(Messages.INSTALL_SERVER_EXIT_FAIL);
+				throw new WorkerException(Messages.INSTALL_SERVER_EXIT_FAIL);
 			}
 			bar.setSelection(100);
 			if (ret)	{

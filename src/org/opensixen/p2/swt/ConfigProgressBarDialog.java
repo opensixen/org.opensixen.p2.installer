@@ -24,7 +24,7 @@ public class ConfigProgressBarDialog extends RunableProgressBarDialog {
 	 * @param parent
 	 */
 	public ConfigProgressBarDialog(Shell parent,  InstallerWizard wizard) {
-		super(parent);
+		super(parent, wizard);
 		this.wizard = wizard;
 	}
 
@@ -54,16 +54,6 @@ public class ConfigProgressBarDialog extends RunableProgressBarDialog {
 		ConfigWorker worker = new ConfigWorker(prop, this);
 		return worker;
 		
-	}
-	
-	/* (non-Javadoc)
-	 * @see org.opensixen.p2.swt.RunableProgressBarDialog#finishWork()
-	 */
-	@Override
-	public synchronized void finishWork() {
-		// TODO Auto-generated method stub
-		super.finishWork();
-		wizard.fireChange(this);
 	}
 
 }
