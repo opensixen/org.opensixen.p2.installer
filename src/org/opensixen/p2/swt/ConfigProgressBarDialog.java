@@ -18,14 +18,11 @@ import org.opensixen.p2.installer.Ini;
  */
 public class ConfigProgressBarDialog extends RunableProgressBarDialog {
 
-	private InstallerWizard wizard;
-
 	/**
 	 * @param parent
 	 */
-	public ConfigProgressBarDialog(Shell parent,  InstallerWizard wizard) {
-		super(parent, wizard);
-		this.wizard = wizard;
+	public ConfigProgressBarDialog(Shell parent) {
+		super(parent);
 	}
 
 	@Override
@@ -40,6 +37,7 @@ public class ConfigProgressBarDialog extends RunableProgressBarDialog {
 	 */
 	@Override
 	public ProgressBarRunnable getRunnable() {
+	/*
 		SetupPage setupPage = wizard.getSetupPage();
 		Properties prop = setupPage.getConfiguration();
 		InstallLocationPage location = wizard.getInstallLocationPage();
@@ -53,6 +51,8 @@ public class ConfigProgressBarDialog extends RunableProgressBarDialog {
 		
 		ConfigWorker worker = new ConfigWorker(prop, this);
 		return worker;
+		*/
+		return null;
 		
 	}
 

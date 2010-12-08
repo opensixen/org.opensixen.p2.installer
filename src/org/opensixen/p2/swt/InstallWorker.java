@@ -11,8 +11,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.ProgressBar;
+import org.opensixen.p2.applications.InstallJob;
 import org.opensixen.p2.common.Installer;
-import org.opensixen.p2.common.ProductDescription;
 
 /**
  * Very Ugly class..
@@ -32,15 +32,10 @@ public class InstallWorker implements ProgressBarRunnable{
 	
 	private RunableProgressBarDialog dialog;
 	
-	private String installType;
-	private String clientPath;
-	private String serverPath;
+	private InstallJob job;
 
-	public InstallWorker(String installType, String clientPath, String serverPath , RunableProgressBarDialog dialog)	{
-		this.installType = installType;
-		this.clientPath = clientPath;
-		this.serverPath = serverPath;
-		
+	public InstallWorker(InstallJob job , RunableProgressBarDialog dialog)	{
+		this.job = job;
 		this.dialog = dialog;
 		 messages = new ProgressBarRunnableMessage(dialog);
 		 bar = new ProgressBarRunnableBarStatus(dialog);
@@ -70,6 +65,7 @@ public class InstallWorker implements ProgressBarRunnable{
 	 * @return
 	 */
 	private  boolean install() throws WorkerException	{				
+	/*
 		boolean ret = false;
 		if (installType.equals(ProductDescription.TYPE_LITE))	{
 			messages.setText(Messages.INSTALLING_OPENSIXEN_LITE);
@@ -164,36 +160,11 @@ public class InstallWorker implements ProgressBarRunnable{
 			return ret;
 
 		}
+		*/
 		return false;
 	}
+		
 	
-	private boolean installClient()	{		
-		Installer installer = new Installer();
-		return installer.install(ProductDescription.TYPE_CLIENT, clientPath);
-	}
-	
-	private boolean installServer()	{
-		Installer installer = new Installer();
-		return installer.install(ProductDescription.TYPE_SERVER, serverPath);
-	}
-	
-	private boolean installLite()	{
-		Installer installer = new Installer();
-		return installer.install(ProductDescription.TYPE_LITE, clientPath);
-	}			
-	
-	private boolean installServerManager()	{
-		/*
-		Installer installer = new Installer();
-		return installer.install(ProductDescription.TYPE_MANAGER, serverPath);
-		*/
-		return true;
-	}
-	
-	private boolean configureServer()	{
-		return true;
-	}
-
 	/* (non-Javadoc)
 	 * @see org.opensixen.p2.swt.ProgressBarRunnable#getMessage()
 	 */

@@ -32,11 +32,7 @@ public class Application implements IApplication {
 	public Object start(IApplicationContext context) throws Exception {
 		display = PlatformUI.createDisplay();
 		Shell shell = new Shell(display);
-		
-		//Installer installer = new Installer();
-		//installer.list();
-		//installer.install("/tmp/osx");
-			
+					
 		// Activamos Log4j
 		URL log4j = getClass().getClassLoader().getResource("log4j.properties"); //$NON-NLS-1$
 		
@@ -61,13 +57,7 @@ public class Application implements IApplication {
 	 * @see org.eclipse.equinox.app.IApplication#stop()
 	 */
 	@Override
-	public void stop() {
-		/*
-		 * if (!PlatformUI.isWorkbenchRunning()) return; final IWorkbench
-		 * workbench = PlatformUI.getWorkbench(); final Display display =
-		 * workbench.getDisplay(); display.syncExec(new Runnable() { public void
-		 * run() { if (!display.isDisposed()) workbench.close(); } });
-		 */
+	public void stop() {		
 		display.dispose();
 	}
 

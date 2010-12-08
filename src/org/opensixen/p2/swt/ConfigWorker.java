@@ -5,7 +5,6 @@ package org.opensixen.p2.swt;
 
 import java.util.Properties;
 
-import org.opensixen.p2.common.ProductDescription;
 import org.opensixen.p2.installer.Ini;
 
 /**
@@ -63,7 +62,7 @@ public class ConfigWorker implements ProgressBarRunnable {
 	}
 	
 	private boolean createProperties()	{
-		
+		/*
 		// If server is not selected, then need client conf.
 		String installType = configuration.getProperty("InstallType");
 		if (!ProductDescription.TYPE_SERVER.equals(installType))	{
@@ -73,6 +72,7 @@ public class ConfigWorker implements ProgressBarRunnable {
 		if (ProductDescription.TYPE_SERVER.equals(installType) || ProductDescription.TYPE_FULL.equals(installType))	{
 			createProperties(configuration.getProperty("ServerPath"));
 		}
+		*/
 		return true;
 	}
 

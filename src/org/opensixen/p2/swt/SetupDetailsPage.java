@@ -21,11 +21,8 @@ import org.eclipse.swt.widgets.Label;
  * @author harlock
  *
  */
-public class SetupDetailsPage extends WizardPage implements ChangeListener, SelectionListener {
+public class SetupDetailsPage extends WizardPage implements InstallerWizardPage, SelectionListener {
 
-	private InstallerWizard wizard;
-
-	
 	private boolean configured = false;
 	
 	private Button configBtn;
@@ -33,10 +30,9 @@ public class SetupDetailsPage extends WizardPage implements ChangeListener, Sele
 
 	private Label installType;
 
-	public SetupDetailsPage(InstallerWizard wizard)	{
+	public SetupDetailsPage()	{
 		super(Messages.CONFIRM_SETUP);
 		setDescription(Messages.CONFIRM_SETUP_DESCRIPTION);
-		this.wizard = wizard;
 	}
 
 	/* (non-Javadoc)
@@ -80,7 +76,9 @@ public class SetupDetailsPage extends WizardPage implements ChangeListener, Sele
 	
 	public void update()	{
 		// Add all the properties in the configuration
-		Properties prop = wizard.getSetupPage().getConfiguration();
+		
+		//Properties prop = wizard.getSetupPage().getConfiguration();
+		Properties prop = null;
 		if (prop == null)	{
 			return;
 		}
@@ -92,13 +90,6 @@ public class SetupDetailsPage extends WizardPage implements ChangeListener, Sele
 		
 	}
 
-	/* (non-Javadoc)
-	 * @see org.opensixen.p2.swt.ChangeListener#changePerformed()
-	 */
-	@Override
-	public void changePerformed() {
-		update();
-	}
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.jface.wizard.WizardPage#canFlipToNextPage()
@@ -114,11 +105,10 @@ public class SetupDetailsPage extends WizardPage implements ChangeListener, Sele
 	@Override
 	public void widgetSelected(SelectionEvent e) {
 		if (e.getSource().equals(configBtn))	{
-			ConfigProgressBarDialog worker = new ConfigProgressBarDialog(getShell(), wizard);
+			ConfigProgressBarDialog worker = new ConfigProgressBarDialog(getShell());
 			worker.open();
 			worker.run();
-		}
-		
+		}		
 	}
 
 	/* (non-Javadoc)
@@ -126,6 +116,24 @@ public class SetupDetailsPage extends WizardPage implements ChangeListener, Sele
 	 */
 	@Override
 	public void widgetDefaultSelected(SelectionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.opensixen.p2.swt.InstallerWizardPage#storeDialogSettings()
+	 */
+	@Override
+	public boolean storeDialogSettings() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.opensixen.p2.swt.InstallerWizardPage#refresh()
+	 */
+	@Override
+	public void refresh() {
 		// TODO Auto-generated method stub
 		
 	}

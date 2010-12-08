@@ -19,7 +19,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Shell;
 import org.opensixen.p2.common.Installer;
-import org.opensixen.p2.common.ProductDescription;
 
 /**
  * 
@@ -43,18 +42,15 @@ public abstract class RunableProgressBarDialog extends TitleAreaDialog {
 
 	private Display display;
 
-	private InstallerWizard wizard;
 
 	private boolean workOk;
 
 	/**
 	 * @param parent
 	 */
-	public RunableProgressBarDialog(Shell parent, InstallerWizard wizard) {
+	public RunableProgressBarDialog(Shell parent) {
 		super(parent);
-		this.display = parent.getDisplay();
-		this.wizard = wizard;
-		
+		this.display = parent.getDisplay();				
 		setBlockOnOpen(false);		
 	}
 	
@@ -126,10 +122,10 @@ public abstract class RunableProgressBarDialog extends TitleAreaDialog {
 				    public void run(){
 				    	getButton(OK).setEnabled(true);				    					    					    	
 				    	if (ok)	{
-				    		wizard.fireChange(this);
+				    		//wizard.fireChange(this);
 				    	}
 				    	else {
-				    		wizard.fireErrorExit();
+				    		//wizard.fireErrorExit();
 				    	}
 				    }
 				  });		

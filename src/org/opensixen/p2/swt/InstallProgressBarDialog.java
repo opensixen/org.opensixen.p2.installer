@@ -21,9 +21,8 @@ public class InstallProgressBarDialog extends RunableProgressBarDialog {
 	 * @param parent
 	 * @param wizard
 	 */
-	public InstallProgressBarDialog(Shell parent, InstallerWizard wizard) {
-		super(parent, wizard);
-		this.wizard = wizard;
+	public InstallProgressBarDialog(Shell parent) {
+		super(parent);
 	}
 	
 	@Override
@@ -38,11 +37,14 @@ public class InstallProgressBarDialog extends RunableProgressBarDialog {
 	 */
 	@Override
 	public ProgressBarRunnable getRunnable() {
-		String installType = wizard.getInstallationTypePage().getInstallType();
-		String clientPath = wizard.getInstallLocationPage().getClientInstallPath();
-		String serverPath = wizard.getInstallLocationPage().getServerInstallPath();
-		InstallWorker worker = new InstallWorker(installType, clientPath, serverPath, this);
-		return worker;
+		//String installType = wizard.getInstallationTypePage().getInstallType();
+		//String clientPath = wizard.getInstallLocationPage().getClientInstallPath();
+		//String serverPath = wizard.getInstallLocationPage().getServerInstallPath();
+		//String dbPath = wizard.getInstallLocationPage().getDBInstallPath();
+		
+		//InstallWorker worker = new InstallWorker(installType, clientPath, serverPath, this);
+		//return worker;
+		return null;
 	}
 
 	public void install()	{

@@ -3,7 +3,6 @@
  */
 package org.opensixen.p2.swt;
 
-import java.util.Enumeration;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
@@ -22,8 +21,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-import org.opensixen.os.PlatformDetails;
-import org.opensixen.p2.common.ProductDescription;
 
 /**
  * 
@@ -32,11 +29,9 @@ import org.opensixen.p2.common.ProductDescription;
  * Indeos Consultoria http://www.indeos.es
  *
  */
-public class SetupPage extends WizardPage implements ChangeListener, SelectionListener, ModifyListener {
+public class SetupPage extends WizardPage implements InstallerWizardPage, SelectionListener, ModifyListener {
 
 	private Logger log = Logger.getLogger(getClass());
-
-	private InstallerWizard wizard;
 	
 	private Button dbInstall;
 	private Button dbCreateUser;
@@ -78,10 +73,9 @@ public class SetupPage extends WizardPage implements ChangeListener, SelectionLi
 	/**
 	 * @param pageName
 	 */
-	protected SetupPage(InstallerWizard wizard) {
+	protected SetupPage() {
 		super(Messages.DATABASE_SETUP);
 		setDescription(Messages.DATABASE_SETUP_DESCRIPTION);
-		this.wizard = wizard;
 	}
 
 	/* (non-Javadoc)
@@ -127,7 +121,7 @@ public class SetupPage extends WizardPage implements ChangeListener, SelectionLi
 		fASHost.addModifyListener(this);
 		
 		// By default, the hostname is the same as the localhost
-		fASHost.setText(PlatformDetails.getHostname());
+		//fASHost.setText(PlatformDetails.getHostname());
 		
 		l = new Label(saSetup, SWT.NONE);
 		l.setText(Messages.AS_PORT);
@@ -164,7 +158,7 @@ public class SetupPage extends WizardPage implements ChangeListener, SelectionLi
 		fDbHost.addModifyListener(this);
 		
 		// By default, the hostname is the same as the localhost
-		fDbHost.setText(PlatformDetails.getHostname());
+		//fDbHost.setText(PlatformDetails.getHostname());
 		
 		l = new Label(setup, SWT.NONE);
 		l.setText(Messages.DB_USER_SYSTEM);
@@ -227,18 +221,6 @@ public class SetupPage extends WizardPage implements ChangeListener, SelectionLi
 		init=true;
 	}
 	
-	
-	/* (non-Javadoc)
-	 * @see org.opensixen.p2.swt.ChangeListener#changePerformed()
-	 */
-	@Override
-	public void changePerformed() {
-		if (init)	{
-			enableTextFields();
-		}
-	}
-
-
 	/**
 	 * Update enabled status for text fields
 	 */
@@ -303,7 +285,7 @@ public class SetupPage extends WizardPage implements ChangeListener, SelectionLi
 		}
 		
 		if (dataOK())	{
-			wizard.fireChange(this);			
+			//wizard.fireChange(this);			
 			bind();
 			Control control = (Control) e.getSource();
 			control.setFocus();
@@ -441,6 +423,24 @@ public class SetupPage extends WizardPage implements ChangeListener, SelectionLi
 		sb.append ("]"); //$NON-NLS-1$
 		return sb.toString ();
 	}	//  toStringLong
+
+	/* (non-Javadoc)
+	 * @see org.opensixen.p2.swt.InstallerWizardPage#storeDialogSettings()
+	 */
+	@Override
+	public boolean storeDialogSettings() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.opensixen.p2.swt.InstallerWizardPage#refresh()
+	 */
+	@Override
+	public void refresh() {
+		// TODO Auto-generated method stub
+		
+	}
 
 	
 

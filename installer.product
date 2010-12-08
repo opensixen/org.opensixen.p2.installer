@@ -10,8 +10,7 @@
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
    </launcherArgs>
 
-
-   <launcher name="install">
+   <launcher name="instalador">
       <solaris/>
       <win useIco="false">
          <bmp/>
