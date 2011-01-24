@@ -75,6 +75,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.opensixen.os.PlatformProvider;
+import org.opensixen.os.ProviderFactory;
 import org.opensixen.p2.applications.ClientApplication;
 import org.opensixen.p2.applications.InstallJob;
 import org.opensixen.p2.applications.InstallableApplication;
@@ -93,6 +95,7 @@ public class InstallLocationPage extends WizardPage implements InstallerWizardPa
 		SelectionListener, ModifyListener {
 	
 	private Logger log = Logger.getLogger(getClass());
+	private PlatformProvider provider;
 	
 	private Text fClientPath;
 	private Button bClient;
@@ -105,6 +108,7 @@ public class InstallLocationPage extends WizardPage implements InstallerWizardPa
 	public InstallLocationPage() {
 		super(Messages.INSTALL_LOCATION);		
 		setDescription(Messages.INSTALL_LOCATION_DESCRIPTION);
+		provider = ProviderFactory.getProvider();
 	}
 
 	/*
@@ -149,7 +153,7 @@ public class InstallLocationPage extends WizardPage implements InstallerWizardPa
 		
 		// Postgres
 		l = new Label(container, SWT.NONE);
-		l.setText("DB_PATH");
+		l.setText(Messages.DB_PATH);
 		c = new Composite(container, SWT.NONE);
 		c.setLayout(new GridLayout(2, false));
 		c.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
@@ -173,8 +177,27 @@ public class InstallLocationPage extends WizardPage implements InstallerWizardPa
 	 */
 	@Override
 	public boolean canFlipToNextPage() {
-		
-
+		InstallJob job = InstallJob.getInstance();
+		for (InstallableApplication app : job.getInstallableApplications())	{
+			if (app.getIu().equals(LiteApplication.IU_LITE)
+					|| app.getIu().equals(ClientApplication.IU_CLIENT))	{
+				if (fClientPath.getText().length() == 0)	{
+					return false;
+				}
+			}
+			
+			if (app.getIu().equals(ServerApplication.IU_SERVER)) {
+				if (fServerPath.getText().length() == 0)	{
+					return false;
+				}
+			}
+			
+			if (app.getIu().equals(PostgresApplication.IU_POSTGRES)) {
+				if (fDBPath.getText().length() == 0)	{
+					return false;
+				}
+			}									
+		}
 		return true;
 	}
 
@@ -188,27 +211,34 @@ public class InstallLocationPage extends WizardPage implements InstallerWizardPa
 	@Override
 	public void widgetSelected(SelectionEvent e) {
 		if (e.getSource().equals(bClient)) {
-			DirectoryDialog dd = new DirectoryDialog(getShell(), SWT.OPEN);
-			dd.setText(Messages.OPEN);
-
-			String dir = dd.open();
+			String dir = openFileChoser();
 			if (dir != null) {
 				fClientPath.setText(dir);
 			}
-
 		}
 
 		else if (e.getSource().equals(bServer)) {
-			DirectoryDialog dd = new DirectoryDialog(getShell(), SWT.OPEN);
-			dd.setText(Messages.OPEN);
-
-			String dir = dd.open();
+			String dir = openFileChoser();
 			if (dir != null) {
 				fServerPath.setText(dir);
 			}
 		}
+		else if (e.getSource().equals(bDB)) {
+			String dir = openFileChoser();			
+			if (dir != null) {
+				fDBPath.setText(dir);
+			}
+		}
 	}
 
+	private String openFileChoser()	{
+		DirectoryDialog dd = new DirectoryDialog(getShell(), SWT.OPEN);
+		dd.setText(Messages.OPEN);
+		String dir = dd.open();
+		return dir;
+	}
+	
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -219,7 +249,6 @@ public class InstallLocationPage extends WizardPage implements InstallerWizardPa
 	@Override
 	public void widgetDefaultSelected(SelectionEvent e) {
 		// TODO Auto-generated method stub
-
 	}
 
 	/* (non-Javadoc)
@@ -227,8 +256,7 @@ public class InstallLocationPage extends WizardPage implements InstallerWizardPa
 	 */
 	@Override
 	public void modifyText(ModifyEvent e) {
-		// TODO Auto-generated method stub
-		
+		getContainer().updateButtons();
 	}
 
 	/* (non-Javadoc)
@@ -274,16 +302,28 @@ public class InstallLocationPage extends WizardPage implements InstallerWizardPa
 					|| app.getIu().equals(ClientApplication.IU_CLIENT))	{
 				fClientPath.setEnabled(true);
 				bClient.setEnabled(true);
+				// Default Path
+				if (fClientPath.getText().length() == 0)	{
+					fClientPath.setText(provider.getPath(PlatformProvider.PATH_CLIENT_ROOT_DEFAULT));
+				}
 			}
 			
 			if (app.getIu().equals(ServerApplication.IU_SERVER)) {
 				fServerPath.setEnabled(true);
 				bServer.setEnabled(true);
+				// Default Path
+				if (fServerPath.getText().length() == 0)	{
+					fServerPath.setText(provider.getPath(PlatformProvider.PATH_SERVER_ROOT_DEFAULT));
+				}
 			}
 			
 			if (app.getIu().equals(PostgresApplication.IU_POSTGRES)) {
 				fDBPath.setEnabled(true);
 				bDB.setEnabled(true);
+				// Default Path
+				if (fDBPath.getText().length() == 0)	{
+					fDBPath.setText(provider.getPath(PlatformProvider.PATH_PGSQL_ROOT_DEFAULT));
+				}
 			}									
 		}			
 	}

@@ -61,6 +61,7 @@
 package org.opensixen.p2.swt;
 
 
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardDialog;
@@ -81,6 +82,10 @@ public class InstallerWizard extends Wizard {
 		super();
 		this.shell = shell;
 		setNeedsProgressMonitor(true);
+		ImageDescriptor logo = ImageDescriptor.createFromFile(getClass(), "/icons/opensixen.png");
+		if (logo != null)	{
+			setDefaultPageImageDescriptor(logo);
+		}
 	}
 	
 	/* (non-Javadoc)
@@ -91,8 +96,9 @@ public class InstallerWizard extends Wizard {
 		addPage(new InstallationTypePage());		
 		addPage(new InstallLocationPage());				
 		addPage(new InstallDetailsPage());
-		addPage(new SetupPage());				
-		addPage(new SetupDetailsPage());			
+
+		//		addPage(new SetupPage());				
+//		addPage(new SetupDetailsPage());			
 	}
 	
 		
@@ -118,7 +124,7 @@ public class InstallerWizard extends Wizard {
 	 */
 	@Override
 	public boolean canFinish() {
-		return true;
+		return false;
 	}
 
 	/* (non-Javadoc)

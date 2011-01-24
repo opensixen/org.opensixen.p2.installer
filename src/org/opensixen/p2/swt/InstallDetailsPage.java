@@ -146,7 +146,15 @@ public class InstallDetailsPage extends WizardPage implements InstallerWizardPag
 	 */
 	@Override
 	public boolean canFlipToNextPage() {
-		return false;
+		InstallJob job = InstallJob.getInstance();		
+		
+		for (InstallableApplication app: job.getInstallableApplications())	{
+			if (app.isInstallOk() == false)	{
+				return false;
+			}
+		}
+		return true;
+
 	}
 
 	/*
@@ -183,6 +191,7 @@ public class InstallDetailsPage extends WizardPage implements InstallerWizardPag
 				// run custom app stuff
 				app.afterInstall();
 				
+				// Set app install ok
 				app.setInstallOk(true);
 			}
 			else {
@@ -200,10 +209,8 @@ public class InstallDetailsPage extends WizardPage implements InstallerWizardPag
 			}			
 		}
 		
-		dialog.close();
-		
-		//return op.getResult();		
-		
+		dialog.close();		
+		getContainer().updateButtons();
 	}
 		
 	/*
@@ -227,7 +234,7 @@ public class InstallDetailsPage extends WizardPage implements InstallerWizardPag
 	@Override
 	public boolean storeDialogSettings() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	/*

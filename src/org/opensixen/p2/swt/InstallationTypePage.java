@@ -92,6 +92,8 @@ public class InstallationTypePage extends WizardPage implements InstallerWizardP
 
 	private Logger log = Logger.getLogger(getClass());
 	
+	private PlatformProvider provider;
+	
 	private Button liteBtn;
 	private Button liteDBBtn;
 	private Button clientBtn;
@@ -106,6 +108,7 @@ public class InstallationTypePage extends WizardPage implements InstallerWizardP
 	protected InstallationTypePage() {
 		super(Messages.INSTALL_TYPE);
 		setDescription(Messages.INSTALL_TYPE_DESCRIPTION);
+		provider = ProviderFactory.getProvider();
 	}
 
 	/* (non-Javadoc)
@@ -207,7 +210,13 @@ public class InstallationTypePage extends WizardPage implements InstallerWizardP
 			liteBtn.setEnabled(false);			
 			liteDBBtn.setEnabled(false);
 			log.trace(Messages.STD_SELECTED);
-		}		
+		}
+		
+		// if unix, disable postrgres
+		if (provider.isUnix())	{
+			serverDBBtn.setEnabled(false);
+			liteDBBtn.setEnabled(false);
+		}				
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.swt.events.SelectionListener#widgetSelected(org.eclipse.swt.events.SelectionEvent)
@@ -215,13 +224,14 @@ public class InstallationTypePage extends WizardPage implements InstallerWizardP
 	@Override
 	public void widgetSelected(SelectionEvent e) {
 		if (e.getSource().equals(optionLite))	{
-			optionStd.setSelection(false);
-			updateButtons();
+			optionStd.setSelection(false);			
 		}
 		else if (e.getSource().equals(optionStd))	{
 			optionLite.setSelection(false);
-			updateButtons();
-		}						
+		}				
+		updateButtons();
+		// Update wizard buttons
+		getContainer().updateButtons();
 	}
 
 	/* (non-Javadoc)
@@ -229,8 +239,7 @@ public class InstallationTypePage extends WizardPage implements InstallerWizardP
 	 */
 	@Override
 	public void widgetDefaultSelected(SelectionEvent e) {
-		// TODO Auto-generated method stub
-		
+		updateButtons();		
 	}
 
 	/* (non-Javadoc)
@@ -238,8 +247,17 @@ public class InstallationTypePage extends WizardPage implements InstallerWizardP
 	 */
 	@Override
 	public boolean canFlipToNextPage() {
-		return true;
+		if (optionLite.getSelection())	{
+			return true;
+		}
+		else {
+			if (serverBtn.getSelection() || clientBtn.getSelection() || serverDBBtn.getSelection())	{
+				return true;
+			}
+		}
+		return false;
 	}
+	
 
 	/* (non-Javadoc)
 	 * @see org.opensixen.p2.swt.InstallerWizardPage#storeDialogSettings()
@@ -276,10 +294,7 @@ public class InstallationTypePage extends WizardPage implements InstallerWizardP
 	 */
 	@Override
 	public void refresh() {
-		PlatformProvider platform = ProviderFactory.getProvider();
-		if (platform.isUnix())	{
-			
-		}
+		
 		
 	}
 	

@@ -131,6 +131,7 @@ public class Messages extends NLS {
 	public static String PRESS_BUTTON_TO_INSTALL;
 	public static String SEARCH;
 	public static String SERVER_PATH;
+	public static String DB_PATH;
 	public static String STD_SELECTED;
 	public static String STD_VERSION;
 	public static String OPENSIXEN_CLIENT;
