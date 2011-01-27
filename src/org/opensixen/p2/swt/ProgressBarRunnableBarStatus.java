@@ -60,7 +60,7 @@
  * ***** END LICENSE BLOCK ***** */
 
 package org.opensixen.p2.swt;
-
+@Deprecated
 class ProgressBarRunnableBarStatus	{
 	private int selection;
 	private RunableProgressBarDialog dialog;

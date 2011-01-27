@@ -71,6 +71,7 @@ import org.eclipse.swt.widgets.Shell;
  * Indeos Consultoria http://www.indeos.es
  *
  */
+@Deprecated
 public class InstallProgressBarDialog extends RunableProgressBarDialog {
 
 	private InstallerWizard wizard;

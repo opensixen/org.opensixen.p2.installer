@@ -66,6 +66,7 @@ import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
+import org.opensixen.p2.applications.InstallJob;
 
 
 /**
@@ -81,7 +82,8 @@ public class InstallerWizard extends Wizard {
 	public  InstallerWizard(Shell shell)	{
 		super();
 		this.shell = shell;
-		setNeedsProgressMonitor(true);
+		setWindowTitle("Opensixen Installer");
+		setNeedsProgressMonitor(true);		
 		ImageDescriptor logo = ImageDescriptor.createFromFile(getClass(), "/icons/opensixen.png");
 		if (logo != null)	{
 			setDefaultPageImageDescriptor(logo);
@@ -95,10 +97,9 @@ public class InstallerWizard extends Wizard {
 	public void addPages() {		
 		addPage(new InstallationTypePage());		
 		addPage(new InstallLocationPage());				
-		addPage(new InstallDetailsPage());
-
-		//		addPage(new SetupPage());				
-//		addPage(new SetupDetailsPage());			
+		//addPage(new InstallDetailsPage());
+		addPage(new SetupPage());			
+		addPage(new SetupDBPage());
 	}
 	
 		
@@ -124,7 +125,7 @@ public class InstallerWizard extends Wizard {
 	 */
 	@Override
 	public boolean canFinish() {
-		return false;
+		return InstallJob.getInstance().isInstallFinishOk();			
 	}
 
 	/* (non-Javadoc)

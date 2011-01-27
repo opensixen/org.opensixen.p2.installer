@@ -80,6 +80,7 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Text;
 import org.opensixen.p2.applications.InstallJob;
 import org.opensixen.p2.applications.InstallableApplication;
+import org.opensixen.p2.applications.ServerApplication;
 import org.opensixen.p2.common.Installer;
 
 /**
@@ -149,12 +150,12 @@ public class InstallDetailsPage extends WizardPage implements InstallerWizardPag
 		InstallJob job = InstallJob.getInstance();		
 		
 		for (InstallableApplication app: job.getInstallableApplications())	{
-			if (app.isInstallOk() == false)	{
-				return false;
+			if (app.getIu().equals(ServerApplication.IU_SERVER) && app.isInstallOk())	{
+				return true;
 			}
 		}
-		return true;
-
+		
+		return false;
 	}
 
 	/*
@@ -209,7 +210,8 @@ public class InstallDetailsPage extends WizardPage implements InstallerWizardPag
 			}			
 		}
 		
-		dialog.close();		
+		dialog.close();
+		refresh();
 		getContainer().updateButtons();
 	}
 		
@@ -248,7 +250,11 @@ public class InstallDetailsPage extends WizardPage implements InstallerWizardPag
 		StringBuffer buff = new StringBuffer();
 		for (InstallableApplication app:job.getInstallableApplications())	{
 			buff.append("Instalar: ").append(app.getIu()).append("\n");
-			buff.append("Path: " ).append(app.getPath()).append("\n\n");			
+			buff.append("Path: " ).append(app.getPath()).append("\n");
+			if (app.isInstallOk())	{
+				buff.append(Messages.INSTALL_EXIT_OK);
+			}
+			buff.append("\n\n");
 		}
 		
 		installDetails.setText(buff.toString());

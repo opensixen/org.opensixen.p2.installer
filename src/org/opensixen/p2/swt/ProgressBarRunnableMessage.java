@@ -63,7 +63,7 @@ package org.opensixen.p2.swt;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-
+@Deprecated
 class ProgressBarRunnableMessage	{
 	
 	private String text;

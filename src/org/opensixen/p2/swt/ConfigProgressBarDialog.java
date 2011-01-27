@@ -72,7 +72,7 @@ import org.opensixen.p2.installer.Ini;
  * 
  * @author Eloy Gomez
  * Indeos Consultoria http://www.indeos.es
- *
+ *@deprecated
  */
 public class ConfigProgressBarDialog extends RunableProgressBarDialog {
 

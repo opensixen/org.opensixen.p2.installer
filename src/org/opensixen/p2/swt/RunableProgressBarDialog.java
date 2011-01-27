@@ -82,7 +82,7 @@ import org.opensixen.p2.common.Installer;
  * 
  * @author Eloy Gomez
  * Indeos Consultoria http://www.indeos.es
- *
+ *@deprecated
  */
 public abstract class RunableProgressBarDialog extends TitleAreaDialog {
 

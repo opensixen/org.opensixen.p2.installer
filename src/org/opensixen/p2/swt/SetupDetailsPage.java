@@ -78,6 +78,7 @@ import org.eclipse.swt.widgets.Label;
  * @author harlock
  *
  */
+@Deprecated
 public class SetupDetailsPage extends WizardPage implements InstallerWizardPage, SelectionListener {
 
 	private boolean configured = false;

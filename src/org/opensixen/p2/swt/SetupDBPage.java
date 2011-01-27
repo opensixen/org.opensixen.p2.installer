@@ -58,91 +58,92 @@
  * lo gobiernan,  GPL 2.0/CDDL 1.0/EPL 1.0.
  *
  * ***** END LICENSE BLOCK ***** */
-
 package org.opensixen.p2.swt;
 
-import java.util.Properties;
-
-import org.opensixen.p2.installer.Ini;
+import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
 
 /**
- * 
- * 
+ * SetupDBPage 
+ *
  * @author Eloy Gomez
  * Indeos Consultoria http://www.indeos.es
- *@deprecated
  */
-public class ConfigWorker implements ProgressBarRunnable {
+public class SetupDBPage extends WizardPage implements InstallerWizardPage, SelectionListener {
 
-	public ProgressBarRunnableMessage messages;
-	public ProgressBarRunnableBarStatus bar;
+	private Button dbInstall;
+	private Button dbCreateUser;
+	private Button dbImportData;
+	private Button dbNothing;
 	
-	private ConfigProgressBarDialog dialog;
-	private Properties configuration;
-	
-	
-	public ConfigWorker(Properties configuration, ConfigProgressBarDialog dialog)	{
-		this.configuration = configuration;
-		this.dialog = dialog;
-		
-		 messages = new ProgressBarRunnableMessage(dialog);
-		 bar = new ProgressBarRunnableBarStatus(dialog);
+	protected SetupDBPage() {
+		super(Messages.DATABASE_SETUP);
+		setDescription(Messages.DATABASE_SETUP_DESCRIPTION);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.opensixen.p2.swt.ProgressBarRunnable#getMessage()
-	 */
 	@Override
-	public ProgressBarRunnableMessage getMessage() {
-		return messages;
+	public void createControl(Composite parent) {
+		Composite container = new Composite(parent, SWT.NONE);
+		GridLayout layout = new GridLayout();
+		container.setLayout(layout);
+		
+		Group operation = new Group(container, SWT.NONE);
+		operation.setLayout(new GridLayout());
+		operation.setText(Messages.DATABASE_OPTIONS);
+		operation.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		
+		dbInstall = new Button(operation, SWT.RADIO);
+		dbInstall.setText(Messages.NO_DATABASE);
+		dbInstall.addSelectionListener(this);
+		
+		dbCreateUser = new Button(operation, SWT.RADIO);
+		dbCreateUser.setText(Messages.DATABASE_WITHOUT_SETUP);
+		dbCreateUser.addSelectionListener(this);
+		
+		dbImportData = new Button(operation, SWT.RADIO);
+		dbImportData.setText(Messages.DATABASE_WITHOUT_DATA);
+		dbImportData.addSelectionListener(this);
+		dbCreateUser.setSelection(true); // Default option
+		
+		dbNothing = new Button(operation, SWT.RADIO);
+		dbNothing.setText(Messages.DATABASE_WITH_DATA);		
+		dbNothing.addSelectionListener(this);
+
+		setPageComplete(false);
+		setControl(container);
+		
 	}
 
-	/* (non-Javadoc)
-	 * @see org.opensixen.p2.swt.ProgressBarRunnable#getBarStatus()
-	 */
 	@Override
-	public ProgressBarRunnableBarStatus getBarStatus() {
-		return bar;
-	}
-	
-	/* (non-Javadoc)
-	 * @see java.lang.Runnable#run()
-	 */
-	@Override
-	public void run() {
-		// Create Properties
-		messages.setText(Messages.ConfigWorker_CREATING_PROPERTIES);
-		bar.setSelection(20);
-		createProperties();
-		bar.setSelection(100);
+	public void widgetSelected(SelectionEvent e) {
+		// TODO Auto-generated method stub
 		
-		dialog.finishWork(true);
-	}
-	
-	private boolean createProperties()	{
-		/*
-		// If server is not selected, then need client conf.
-		String installType = configuration.getProperty("InstallType");
-		if (!ProductDescription.TYPE_SERVER.equals(installType))	{
-			createProperties(configuration.getProperty("ClientPath"));
-		}
-		
-		if (ProductDescription.TYPE_SERVER.equals(installType) || ProductDescription.TYPE_FULL.equals(installType))	{
-			createProperties(configuration.getProperty("ServerPath"));
-		}
-		*/
-		return true;
 	}
 
-	
-	private boolean createProperties(String path)	{
-		// Setup as server and setup path as adempiere home
-		Ini.setClient(false);
-		Ini.setAdempiereHome(path);
-		Ini.loadProperties(true);
-		Ini.setProperty (Ini.P_CONNECTION, configuration.getProperty(Ini.P_CONNECTION));
-		Ini.saveProperties(false);
-		return true;
+	@Override
+	public void widgetDefaultSelected(SelectionEvent e) {
+		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public boolean storeDialogSettings() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void refresh() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
