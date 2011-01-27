@@ -97,7 +97,7 @@ public class InstallerWizard extends Wizard {
 	public void addPages() {		
 		addPage(new InstallationTypePage());		
 		addPage(new InstallLocationPage());				
-		//addPage(new InstallDetailsPage());
+		addPage(new InstallDetailsPage());
 		addPage(new SetupPage());			
 		addPage(new SetupDBPage());
 	}
