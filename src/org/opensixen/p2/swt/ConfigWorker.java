@@ -63,7 +63,7 @@ package org.opensixen.p2.swt;
 
 import java.util.Properties;
 
-import org.opensixen.p2.installer.Ini;
+import org.compiere.util.Ini;
 
 /**
  * 

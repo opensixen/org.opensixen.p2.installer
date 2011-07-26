@@ -64,6 +64,7 @@ package org.opensixen.p2.swt;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
+import org.compiere.util.Ini;
 import org.compiere.util.SecureEngine;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
@@ -89,7 +90,6 @@ import org.opensixen.p2.applications.InstallableApplication;
 import org.opensixen.p2.applications.LiteApplication;
 import org.opensixen.p2.applications.PostgresApplication;
 import org.opensixen.p2.applications.ServerApplication;
-import org.opensixen.p2.installer.Ini;
 
 /**
  * 

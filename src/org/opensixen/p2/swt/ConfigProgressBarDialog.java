@@ -63,9 +63,9 @@ package org.opensixen.p2.swt;
 
 import java.util.Properties;
 
+import org.compiere.util.Ini;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.swt.widgets.Shell;
-import org.opensixen.p2.installer.Ini;
 
 /**
  * 
