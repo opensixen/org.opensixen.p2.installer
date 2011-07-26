@@ -11,6 +11,5 @@ Require-Bundle: org.eclipse.ui,
  org.opensixen.p2.common;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: org.compiere.util,
- org.opensixen.p2.installer,
+Export-Package: org.opensixen.p2.installer,
  org.opensixen.p2.swt
