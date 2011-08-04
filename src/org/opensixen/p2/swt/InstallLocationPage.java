@@ -77,12 +77,12 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.opensixen.os.PlatformProvider;
 import org.opensixen.os.ProviderFactory;
-import org.opensixen.p2.applications.ClientApplication;
 import org.opensixen.p2.applications.InstallJob;
 import org.opensixen.p2.applications.InstallableApplication;
-import org.opensixen.p2.applications.LiteApplication;
-import org.opensixen.p2.applications.PostgresApplication;
-import org.opensixen.p2.applications.ServerApplication;
+import org.opensixen.p2.installer.apps.ClientApplication;
+import org.opensixen.p2.installer.apps.LiteApplication;
+import org.opensixen.p2.installer.apps.PostgresApplication;
+import org.opensixen.p2.installer.apps.ServerApplication;
 
 /**
  * 
@@ -179,20 +179,20 @@ public class InstallLocationPage extends WizardPage implements InstallerWizardPa
 	public boolean canFlipToNextPage() {
 		InstallJob job = InstallJob.getInstance();
 		for (InstallableApplication app : job.getInstallableApplications())	{
-			if (app.getIu().equals(LiteApplication.IU_LITE)
-					|| app.getIu().equals(ClientApplication.IU_CLIENT))	{
+			if (app.getID().equals(LiteApplication.IU_LITE)
+					|| app.getID().equals(ClientApplication.IU_CLIENT))	{
 				if (fClientPath.getText().length() == 0)	{
 					return false;
 				}
 			}
 			
-			if (app.getIu().equals(ServerApplication.IU_SERVER)) {
+			if (app.getID().equals(ServerApplication.IU_SERVER)) {
 				if (fServerPath.getText().length() == 0)	{
 					return false;
 				}
 			}
 			
-			if (app.getIu().equals(PostgresApplication.IU_POSTGRES)) {
+			if (app.getID().equals(PostgresApplication.IU_POSTGRES)) {
 				if (fDBPath.getText().length() == 0)	{
 					return false;
 				}
@@ -266,16 +266,16 @@ public class InstallLocationPage extends WizardPage implements InstallerWizardPa
 	public boolean storeDialogSettings() {
 		InstallJob job = InstallJob.getInstance();
 		for (InstallableApplication app : job.getInstallableApplications())	{
-			if (app.getIu().equals(LiteApplication.IU_LITE)
-					|| app.getIu().equals(ClientApplication.IU_CLIENT))	{
+			if (app.getID().equals(LiteApplication.IU_LITE)
+					|| app.getID().equals(ClientApplication.IU_CLIENT))	{
 				app.setPath(fClientPath.getText());				
 			}
 			
-			if (app.getIu().equals(ServerApplication.IU_SERVER)) {
+			if (app.getID().equals(ServerApplication.IU_SERVER)) {
 				app.setPath(fServerPath.getText());
 			}
 			
-			if (app.getIu().equals(PostgresApplication.IU_POSTGRES)) {
+			if (app.getID().equals(PostgresApplication.IU_POSTGRES)) {
 				app.setPath(fDBPath.getText());
 			}									
 		}
@@ -298,8 +298,8 @@ public class InstallLocationPage extends WizardPage implements InstallerWizardPa
 		bDB.setEnabled(false);
 		
 		for (InstallableApplication app : job.getInstallableApplications())	{
-			if (app.getIu().equals(LiteApplication.IU_LITE)
-					|| app.getIu().equals(ClientApplication.IU_CLIENT))	{
+			if (app.getID().equals(LiteApplication.IU_LITE)
+					|| app.getID().equals(ClientApplication.IU_CLIENT))	{
 				fClientPath.setEnabled(true);
 				bClient.setEnabled(true);
 				// Default Path
@@ -308,7 +308,7 @@ public class InstallLocationPage extends WizardPage implements InstallerWizardPa
 				}
 			}
 			
-			if (app.getIu().equals(ServerApplication.IU_SERVER)) {
+			if (app.getID().equals(ServerApplication.IU_SERVER)) {
 				fServerPath.setEnabled(true);
 				bServer.setEnabled(true);
 				// Default Path
@@ -317,7 +317,7 @@ public class InstallLocationPage extends WizardPage implements InstallerWizardPa
 				}
 			}
 			
-			if (app.getIu().equals(PostgresApplication.IU_POSTGRES)) {
+			if (app.getID().equals(PostgresApplication.IU_POSTGRES)) {
 				fDBPath.setEnabled(true);
 				bDB.setEnabled(true);
 				// Default Path

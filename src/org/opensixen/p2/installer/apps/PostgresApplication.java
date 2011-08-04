@@ -59,31 +59,61 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-package org.opensixen.p2.swt;
-@Deprecated
-class ProgressBarRunnableBarStatus	{
-	private int selection;
-	private RunableProgressBarDialog dialog;
-	
-	
+package org.opensixen.p2.installer.apps;
 
-	public ProgressBarRunnableBarStatus(RunableProgressBarDialog dialog) {
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import org.opensixen.os.PlatformProvider;
+import org.opensixen.os.ProviderFactory;
+import org.opensixen.p2.applications.InstallableApplication;
+
+/**
+ * 
+ * 
+ * @author Eloy Gomez
+ * Indeos Consultoria http://www.indeos.es
+ *
+ */
+public class PostgresApplication extends InstallableApplication {
+
+	public final static String IU_POSTGRES = "feature.opensixen.bundle.postgres.feature.group"; //$NON-NLS-1$	
+	public final static String PROFILE_POSTGRES = "PostgreSQL";	
+	
+	private static String CMD_REGISTER = "addService.bat";
+	private static String CMD_UNREGISTER = "removeService.bat";
+	
+	
+	/**
+	 * 
+	 */
+	public PostgresApplication() {
 		super();
-		this.dialog = dialog;
+		setID(IU_POSTGRES);
 	}
 
-	/**
-	 * @return the selection
+	/* (non-Javadoc)
+	 * @see org.opensixen.p2.applications.InstallableApplication#afterInstall()
 	 */
-	public int getSelection() {
-		return selection;
-	}
-
-	/**
-	 * @param selection the selection to set
-	 */
-	public void setSelection(int selection) {
-		this.selection = selection;
-		dialog.fireChange();
-	}		
+	@Override
+	public void afterInstall() {
+		PlatformProvider provider = ProviderFactory.getProvider();
+		// Unix don't need this
+		if (provider.isUnix())	{
+			return;
+		}
+		
+		String cmdReg = getPath() + "/" + CMD_REGISTER;		
+		String cmdUnreg = getPath() + "/" + CMD_UNREGISTER;
+		try {
+			// First try to unregister
+			provider.runCommand(cmdUnreg);
+			
+			// Register database.
+			provider.runCommand(cmdReg);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}			
 }

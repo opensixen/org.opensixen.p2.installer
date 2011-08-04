@@ -74,14 +74,12 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Text;
 import org.opensixen.p2.applications.InstallJob;
 import org.opensixen.p2.applications.InstallableApplication;
-import org.opensixen.p2.applications.ServerApplication;
-import org.opensixen.p2.common.Installer;
+import org.opensixen.p2.installer.apps.ServerApplication;
 
 /**
  * 
@@ -150,7 +148,7 @@ public class InstallDetailsPage extends WizardPage implements InstallerWizardPag
 		InstallJob job = InstallJob.getInstance();		
 		
 		for (InstallableApplication app: job.getInstallableApplications())	{
-			if (app.getIu().equals(ServerApplication.IU_SERVER) && app.isInstallOk())	{
+			if (app.getID().equals(ServerApplication.IU_SERVER) && app.isInstallOk())	{
 				return true;
 			}
 		}
@@ -249,7 +247,7 @@ public class InstallDetailsPage extends WizardPage implements InstallerWizardPag
 		InstallJob job = InstallJob.getInstance();
 		StringBuffer buff = new StringBuffer();
 		for (InstallableApplication app:job.getInstallableApplications())	{
-			buff.append("Instalar: ").append(app.getIu()).append("\n");
+			buff.append("Instalar: ").append(app.getID()).append("\n");
 			buff.append("Path: " ).append(app.getPath()).append("\n");
 			if (app.isInstallOk())	{
 				buff.append(Messages.INSTALL_EXIT_OK);

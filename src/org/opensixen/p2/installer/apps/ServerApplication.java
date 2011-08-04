@@ -1,4 +1,4 @@
- /******* BEGIN LICENSE BLOCK *****
+/******* BEGIN LICENSE BLOCK *****
  * Versión: GPL 2.0/CDDL 1.0/EPL 1.0
  *
  * Los contenidos de este fichero están sujetos a la Licencia
@@ -59,58 +59,96 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-package org.opensixen.p2.swt;
+package org.opensixen.p2.installer.apps;
 
-import org.eclipse.jface.dialogs.IMessageProvider;
-import org.eclipse.swt.widgets.Shell;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URI;
+
+import org.apache.log4j.Logger;
+import org.opensixen.os.PlatformProvider;
+import org.opensixen.os.ProviderFactory;
+import org.opensixen.p2.applications.InstallableApplication;
 
 /**
  * 
  * 
- * @author Eloy Gomez
- * Indeos Consultoria http://www.indeos.es
- *
+ * @author Eloy Gomez Indeos Consultoria http://www.indeos.es
+ * 
  */
-@Deprecated
-public class InstallProgressBarDialog extends RunableProgressBarDialog {
+public class ServerApplication extends InstallableApplication {
 
-	private InstallerWizard wizard;
+	public final static String IU_SERVER = "OpensixenServer"; //$NON-NLS-1$
+	public final static URI URL_SERVER = URI.create("http://dev.opensixen.org/products/server/"); //$NON-NLS-1$
+	//public final static String URL_SERVER = "file:///tmp/server/repository/";
+
+	private static final String SERVER_SUFIX = "/tomcat/webapps/osx/WEB-INF/eclipse";
+			
+	private PlatformProvider provider;	
 	
 	/**
-	 * @param parent
-	 * @param wizard
+	 * 
 	 */
-	public InstallProgressBarDialog(Shell parent) {
-		super(parent);
+	public ServerApplication() {
+		super(IU_SERVER, PROFILE_SERVER, URL_SERVER );
+		setProfile(PROFILE_SERVER);
+		provider = ProviderFactory.getProvider();
 	}
-	
-	@Override
-	public void create() {
-		super.create();
-		setTitle(Messages.INSTALLING_OPENSIXEN);
-		setMessage(Messages.INSTALLING_OPENSIXEN_WAIT, IMessageProvider.INFORMATION);
-	}
-	
-	/* (non-Javadoc)
-	 * @see org.opensixen.p2.swt.RunableProgressBarDialog#getRunnable()
+
+	/**
+	 * Tenemos que añadirle nun sufijo al servidor para que se instale en el
+	 * sitio correcto
 	 */
 	@Override
-	public ProgressBarRunnable getRunnable() {
-		//String installType = wizard.getInstallationTypePage().getInstallType();
-		//String clientPath = wizard.getInstallLocationPage().getClientInstallPath();
-		//String serverPath = wizard.getInstallLocationPage().getServerInstallPath();
-		//String dbPath = wizard.getInstallLocationPage().getDBInstallPath();
-		
-		//InstallWorker worker = new InstallWorker(installType, clientPath, serverPath, this);
-		//return worker;
-		return null;
+	public String getPath() {
+		String path = super.getPath();
+
+		return path + SERVER_SUFIX;
+	}
+	
+	public String getRealPath()	{
+		return super.getPath();
 	}
 
-	public void install()	{
-		run();
+	@Override
+	public URI getUpdateSite() {
+		// TODO Auto-generated method stub
+		return URL_SERVER;
 	}
 
-	
+	@Override
+	public void afterInstall() {
+		if (provider.isUnix()) {
+			afterInstallLinux();
+		} else {
+			afterInstallWindows();
+		}
+	}
 
-	
+	private boolean afterInstallWindows() {
+		return true;
+	}
+
+	private boolean afterInstallLinux() {
+		String path = super.getPath();
+		try {
+			// Generate the script
+			String script = "#!/bin/sh\nchmod 755 " + path
+					+ "/startup\nchmod 755 " + path + "/stop\nchmod 755 "
+					+ path + "/tomcat/bin/*.sh\n";
+			String file = path + "/.setupPerms.sh";
+			BufferedWriter out = new BufferedWriter(new FileWriter(file));
+			out.write(script);
+			out.close();
+			provider.runCommand("/bin/sh " + file);
+			return true;
+		} catch (Exception e) {
+			log.error("Error afterInstall:", e);
+			return false;
+		}
+	}
+
 }

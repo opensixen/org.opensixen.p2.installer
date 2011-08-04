@@ -84,12 +84,12 @@ import org.eclipse.swt.widgets.Text;
 import org.opensixen.os.PlatformDetails;
 import org.opensixen.os.PlatformProvider;
 import org.opensixen.os.ProviderFactory;
-import org.opensixen.p2.applications.ClientApplication;
 import org.opensixen.p2.applications.InstallJob;
 import org.opensixen.p2.applications.InstallableApplication;
-import org.opensixen.p2.applications.LiteApplication;
-import org.opensixen.p2.applications.PostgresApplication;
-import org.opensixen.p2.applications.ServerApplication;
+import org.opensixen.p2.installer.apps.ClientApplication;
+import org.opensixen.p2.installer.apps.LiteApplication;
+import org.opensixen.p2.installer.apps.PostgresApplication;
+import org.opensixen.p2.installer.apps.ServerApplication;
 
 /**
  * 
@@ -380,7 +380,7 @@ public class SetupPage extends WizardPage implements InstallerWizardPage, Select
 	public boolean storeDialogSettings() {
 		bind();
 		for (InstallableApplication app:InstallJob.getInstance().getInstallableApplications())	{
-			if (app.getIu().equals(ServerApplication.IU_SERVER))	{
+			if (app.getID().equals(ServerApplication.IU_SERVER))	{
 				ServerApplication server = (ServerApplication) app;
 				boolean ok = createProperties(server.getRealPath());
 				app.setConfigOk(ok);

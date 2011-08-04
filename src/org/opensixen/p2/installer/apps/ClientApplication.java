@@ -59,19 +59,30 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-package org.opensixen.p2.swt;
+package org.opensixen.p2.installer.apps;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import org.opensixen.p2.applications.InstallableApplication;
 
 /**
  * 
  * 
  * @author Eloy Gomez
  * Indeos Consultoria http://www.indeos.es
- *@deprecated
+ *
  */
-public interface ProgressBarRunnable extends Runnable {
+public class ClientApplication extends InstallableApplication {
 	
-	public ProgressBarRunnableMessage getMessage();
-	public ProgressBarRunnableBarStatus getBarStatus();
+	public final static String IU_CLIENT = "OpensixenClient"; //$NON-NLS-1$
+	public final static URI URI_CLIENT=  URI.create("http://dev.opensixen.org/products/client/"); //$NON-NLS-1$
+	public final static String PROFILE_CLIENT = "OpensixenClient";
 	
-
+	/**
+	 * @param iu
+	 */
+	public ClientApplication() {
+		super(IU_CLIENT, "OpensixenClient", URI_CLIENT);
+	}
 }
