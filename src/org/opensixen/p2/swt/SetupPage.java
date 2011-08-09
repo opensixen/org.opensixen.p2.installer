@@ -64,6 +64,7 @@ package org.opensixen.p2.swt;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
+import org.compiere.util.CustomConnection;
 import org.compiere.util.Ini;
 import org.compiere.util.SecureEngine;
 import org.eclipse.jface.wizard.WizardPage;
@@ -316,20 +317,10 @@ public class SetupPage extends WizardPage implements InstallerWizardPage, Select
 	conf.put("DBhost",fDbHost.getText()); //$NON-NLS-1$
 	conf.put("DBport", fDbPort.getText()); //$NON-NLS-1$
 	conf.put("DBname", fDbName.getText()); //$NON-NLS-1$
-	
-	conf.put("BQ", "false"); //$NON-NLS-1$
-	conf.put("FW", "false"); //$NON-NLS-1$
-	conf.put("FWhost", ""); //$NON-NLS-1$ //$NON-NLS-2$
-	conf.put("FWport", "");	 //$NON-NLS-1$ //$NON-NLS-2$
-	
+		
 	conf.put("UID", fDBuser.getText()); //$NON-NLS-1$
 	conf.put("PWD", fDBPasswd.getText()); //$NON-NLS-1$
 	
-	//conf.put("SystemUID", fDBSystemuser.getText()); //$NON-NLS-1$
-	//conf.put("SystemPWD", fDBSystemPasswd.getText()); //$NON-NLS-1$
-	
-	conf.put("SystemUID", "postgres"); //$NON-NLS-1$
-	conf.put("SystemPWD", "postgres"); //$NON-NLS-1$
 	
 	this.config = conf;		
 	}
@@ -339,39 +330,14 @@ public class SetupPage extends WizardPage implements InstallerWizardPage, Select
 		Ini.setClient(false);
 		Ini.setAdempiereHome(path);
 		Ini.loadProperties(true);		
-		Ini.setProperty (Ini.P_CONNECTION, getConnectionString());
+		Ini.setProperty (Ini.P_CONNECTION, CustomConnection.getConnectionString(config));
 		
 		Ini.saveProperties(false);
 		return true;
 		
 	}
 	
-	/**
-	 *  String representation.
-	 *  Used also for Instanciation
-	 *  @return string representation
-	 *	@see #setAttributes(String) setAttributes
-	 */
-	public String getConnectionString ()
-	{				
-		StringBuffer sb = new StringBuffer ("CConnection["); //$NON-NLS-1$
-		sb.append ("name=").append (config.getProperty("name")) //$NON-NLS-1$ //$NON-NLS-2$
-		  .append (",AppsHost=").append (config.getProperty("AppsHost")) //$NON-NLS-1$ //$NON-NLS-2$
-		  .append (",AppsPort=").append (config.getProperty("AppsPort")) //$NON-NLS-1$ //$NON-NLS-2$
-		  .append (",type=").append (config.getProperty("type")) //$NON-NLS-1$ //$NON-NLS-2$
-		  .append (",DBhost=").append (config.getProperty("DBhost")) //$NON-NLS-1$ //$NON-NLS-2$
-		  .append (",DBport=").append (config.getProperty("DBport")) //$NON-NLS-1$ //$NON-NLS-2$
-		  .append (",DBname=").append (config.getProperty("DBname")) //$NON-NLS-1$ //$NON-NLS-2$
-		  .append (",BQ=").append (config.getProperty("BQ")) //$NON-NLS-1$ //$NON-NLS-2$
-		  .append (",FW=").append (config.getProperty("FW")) //$NON-NLS-1$ //$NON-NLS-2$
-		  .append (",FWhost=").append (config.getProperty("FWhost")) //$NON-NLS-1$ //$NON-NLS-2$
-		  .append (",FWport=").append (config.getProperty("FWport")) //$NON-NLS-1$ //$NON-NLS-2$
-		  .append (",UID=").append (config.getProperty("UID")) //$NON-NLS-1$ //$NON-NLS-2$
-		  .append (",PWD=").append (config.getProperty("PWD")) //$NON-NLS-1$ //$NON-NLS-2$
-		  ;		//	the format is read by setAttributes
-		sb.append ("]"); //$NON-NLS-1$
-		return sb.toString ();
-	}	//  toStringLong
+	
 
 	/* (non-Javadoc)
 	 * @see org.opensixen.p2.swt.InstallerWizardPage#storeDialogSettings()
